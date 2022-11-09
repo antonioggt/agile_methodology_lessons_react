@@ -1,23 +1,17 @@
 import React from 'react';
 import './App.css';
+// import ButtonCart from './components/ButtonCart';
+import { Route, Switch } from 'react-router-dom';
+import Home from './pages/Home';
+import Cart from './pages/Cart';
 
 class App extends React.Component {
-  state = {
-    productsList: [],
-  };
-
   render() {
-    const { productsList } = this.state;
-    const noProduct = (
-      <p data-testid="home-initial-message">
-        Digite algum termo de pesquisa ou escolha uma categoria.
-      </p>
-    );
     return (
-      <div className="App">
-        { productsList.length === 0
-          ? noProduct : productsList.map((product) => product) }
-      </div>
+      <Switch>
+        <Route exact path="/" component={ Home } />
+        <Route exact path="/cart" component={ Cart } />
+      </Switch>
     );
   }
 }
