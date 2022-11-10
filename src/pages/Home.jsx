@@ -35,6 +35,15 @@ class Home extends React.Component {
     });
   };
 
+  handleClickForCategory = async (id) => {
+    const result = await getProductsFromCategoryAndQuery(id);
+
+    this.setState({
+      productsList: result.results,
+      noProductFound: true,
+    });
+  };
+
   render() {
     const { productsList, categoryList, inputValue, noProductFound } = this.state;
     const noProduct = (
@@ -83,6 +92,7 @@ class Home extends React.Component {
               key={ e.name }
               type="button"
               data-testid="category"
+              onClick={ () => this.handleClickForCategory(e.id) }
             >
               { e.name }
             </button>
