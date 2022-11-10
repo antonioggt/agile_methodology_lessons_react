@@ -2,13 +2,35 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+const CART_ITEMS = 'cart-items';
+
 class Card extends Component {
+  componentDidMount() {
+    if (!JSON.parse(localStorage.getItem(CART_ITEMS))) {
+      localStorage.setItem(CART_ITEMS, JSON.stringify([]));
+    }
+  }
+
+  readItems = () => JSON.parse(localStorage.getItem(CART_ITEMS));
+
+  saveItems = (setCartItems) => localStorage
+    .setItem(CART_ITEMS, JSON.stringify(setCartItems));
+
+  addItem = (item) => {
+    if (item) {
+      const setCartItems = this.readItems();
+      this.saveItems([...setCartItems, item]);
+    }
+  };
+
   handleClick = () => {
-    const { title, price } = this.props;
-    const arrayItem = [];
-    const item = [title, price];
-    arrayItem.push(item);
-    localStorage.setItem('item', JSON.stringify(arrayItem));
+    const { title, price, productId } = this.props;
+    const eachItem = [{
+      nome: title,
+      preco: price,
+      id: productId,
+    }];
+    this.addItem(eachItem);
   };
 
   render() {
