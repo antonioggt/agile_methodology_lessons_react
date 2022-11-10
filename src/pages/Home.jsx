@@ -80,6 +80,7 @@ class Home extends React.Component {
         { productsList.length === 0
           ? noProduct : productsList.map((product) => (
             <Card
+              productId={ product.id }
               key={ product.id }
               title={ product.title }
               price={ product.price }
