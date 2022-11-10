@@ -24,7 +24,7 @@ class Cart extends React.Component {
     );
     return (
       <div>
-        { cartList.length === 0
+        { !cartList
           ? noCartList
           : (
             <div>
