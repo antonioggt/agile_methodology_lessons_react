@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Icon from '../icons8-search.svg';
+import CartIcon from '../icons8-blackfriday-64.png';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import Card from './Card';
+import '../App.css';
 
 class Home extends React.Component {
   state = {
@@ -47,57 +50,72 @@ class Home extends React.Component {
   render() {
     const { productsList, categoryList, inputValue, noProductFound } = this.state;
     const noProduct = (
-      <p data-testid="home-initial-message">
-        { noProductFound
-          ? 'Nenhum produto foi encontrado'
-          : 'Digite algum termo de pesquisa ou escolha uma categoria.' }
-      </p>
+      <div className="initialMessage">
+        <p data-testid="home-initial-message">
+          { noProductFound
+            ? 'Nenhum produto foi encontrado'
+            : 'Digite algum termo de pesquisa ou escolha uma categoria.' }
+        </p>
+      </div>
     );
     return (
       <div className="Home">
-        <div>
-          <label htmlFor="query-input">
-            <input
-              type="text"
-              name="inputValue"
-              onChange={ this.handleChanges }
-              data-testid="query-input"
-              value={ inputValue }
-            />
-          </label>
-          <button
-            type="button"
-            data-testid="query-button"
-            onClick={ this.handleClick }
-          >
-            Pesquisar
-          </button>
-        </div>
-
-        <Link to="/cart" data-testid="shopping-cart-button">
-          Carrinho de Compras
-        </Link>
-        { productsList.length === 0
-          ? noProduct : productsList.map((product) => (
-            <Card
-              productId={ product.id }
-              key={ product.id }
-              title={ product.title }
-              price={ product.price }
-              img={ product.thumbnail }
-            />
-          )) }
-        <div>
-          {categoryList.map((e) => (
+        <div className="HeaderContent">
+          <div className="Header">
+            <label htmlFor="query-input">
+              <input
+                className="inputText"
+                type="text"
+                name="inputValue"
+                onChange={ this.handleChanges }
+                data-testid="query-input"
+                value={ inputValue }
+              />
+            </label>
             <button
-              key={ e.name }
+              className="HeaderHome"
               type="button"
-              data-testid="category"
-              onClick={ () => this.handleClickForCategory(e.id) }
+              data-testid="query-button"
+              onClick={ this.handleClick }
             >
-              { e.name }
+              <img src={ Icon } alt="Botao de Busca" />
             </button>
-          ))}
+          </div>
+
+          <Link
+            to="/cart"
+            data-testid="shopping-cart-button"
+            className="HeaderButton"
+          >
+            <img src={ CartIcon } alt="Botao do Carrinho" />
+          </Link>
+        </div>
+        <div className="totalContainer">
+          { productsList.length === 0
+            ? noProduct : productsList.map((product) => (
+              <Card
+                productId={ product.id }
+                key={ product.id }
+                title={ product.title }
+                price={ product.price }
+                img={ product.thumbnail }
+              />
+            )) }
+          <div className="categoryContainer">
+            <p className="categoryHead">Categorias</p>
+            <hr className="categoryHead" />
+            {categoryList.map((e) => (
+              <button
+                className="categoryItems"
+                key={ e.name }
+                type="button"
+                data-testid="category"
+                onClick={ () => this.handleClickForCategory(e.id) }
+              >
+                { e.name }
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     );
