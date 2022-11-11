@@ -50,11 +50,13 @@ class Home extends React.Component {
   render() {
     const { productsList, categoryList, inputValue, noProductFound } = this.state;
     const noProduct = (
-      <p data-testid="home-initial-message">
-        { noProductFound
-          ? 'Nenhum produto foi encontrado'
-          : 'Digite algum termo de pesquisa ou escolha uma categoria.' }
-      </p>
+      <div className="initialMessage">
+        <p data-testid="home-initial-message">
+          { noProductFound
+            ? 'Nenhum produto foi encontrado'
+            : 'Digite algum termo de pesquisa ou escolha uma categoria.' }
+        </p>
+      </div>
     );
     return (
       <div className="Home">
@@ -88,27 +90,32 @@ class Home extends React.Component {
             <img src={ CartIcon } alt="Botao do Carrinho" />
           </Link>
         </div>
-        { productsList.length === 0
-          ? noProduct : productsList.map((product) => (
-            <Card
-              productId={ product.id }
-              key={ product.id }
-              title={ product.title }
-              price={ product.price }
-              img={ product.thumbnail }
-            />
-          )) }
-        <div>
-          {categoryList.map((e) => (
-            <button
-              key={ e.name }
-              type="button"
-              data-testid="category"
-              onClick={ () => this.handleClickForCategory(e.id) }
-            >
-              { e.name }
-            </button>
-          ))}
+        <div className="totalContainer">
+          { productsList.length === 0
+            ? noProduct : productsList.map((product) => (
+              <Card
+                productId={ product.id }
+                key={ product.id }
+                title={ product.title }
+                price={ product.price }
+                img={ product.thumbnail }
+              />
+            )) }
+          <div className="categoryContainer">
+            <p className="categoryHead">Categorias</p>
+            <hr className="categoryHead" />
+            {categoryList.map((e) => (
+              <button
+                className="categoryItems"
+                key={ e.name }
+                type="button"
+                data-testid="category"
+                onClick={ () => this.handleClickForCategory(e.id) }
+              >
+                { e.name }
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     );
