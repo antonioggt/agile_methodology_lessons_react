@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Icon from '../icons8-search.svg';
+import CartIcon from '../icons8-blackfriday-64.png';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import Card from './Card';
+import '../App.css';
 
 class Home extends React.Component {
   state = {
@@ -55,28 +58,36 @@ class Home extends React.Component {
     );
     return (
       <div className="Home">
-        <div>
-          <label htmlFor="query-input">
-            <input
-              type="text"
-              name="inputValue"
-              onChange={ this.handleChanges }
-              data-testid="query-input"
-              value={ inputValue }
-            />
-          </label>
-          <button
-            type="button"
-            data-testid="query-button"
-            onClick={ this.handleClick }
-          >
-            Pesquisar
-          </button>
-        </div>
+        <div className="HeaderContent">
+          <div className="Header">
+            <label htmlFor="query-input">
+              <input
+                className="inputText"
+                type="text"
+                name="inputValue"
+                onChange={ this.handleChanges }
+                data-testid="query-input"
+                value={ inputValue }
+              />
+            </label>
+            <button
+              className="HeaderHome"
+              type="button"
+              data-testid="query-button"
+              onClick={ this.handleClick }
+            >
+              <img src={ Icon } alt="Botao de Busca" />
+            </button>
+          </div>
 
-        <Link to="/cart" data-testid="shopping-cart-button">
-          Carrinho de Compras
-        </Link>
+          <Link
+            to="/cart"
+            data-testid="shopping-cart-button"
+            className="HeaderButton"
+          >
+            <img src={ CartIcon } alt="Botao do Carrinho" />
+          </Link>
+        </div>
         { productsList.length === 0
           ? noProduct : productsList.map((product) => (
             <Card
